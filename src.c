@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include
+#include <stdlib.h>
 #include <pthread.h>
 
 void *entry_point(void *value)
@@ -8,16 +8,16 @@ void *entry_point(void *value)
   
   int *num = (int *) value;
   
-  printf("the valuue of value is %d", *num)
+  printf("the valuue of value is %d", *num);
   
-  RETURN NULL;
+  return NULL;
  }
 
 int main(int argc, char **argv)
 {
   pthread_t thread;
   
-  printf("first thread \n ")
+  printf("first thread \n ");
   
   int num = 5;
   

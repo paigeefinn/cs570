@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <semaphore.h>
+#include <stdlib.h>  
+#include <pthread.h> // for threads
+#include <semaphore.h> // for FLAG
+#include <unistd.h> // for pid
 #define NUM_THREADS     7
 
 void *odd_threads(void *value)
@@ -19,10 +20,21 @@ void *odd_threads(void *value)
 
 int main(int argc, char **argv)
 {
-  // assigns a file pointer and creates the txt file QUOTE
+  // 1.1 assigns a file pointer and creates the txt file QUOTE
   FILE *fp;
-  fp = fopen ("QUOTE.txt", "w");
+  fp = fopen ("QUOTE.txt", "w+");
+    // w+ opens the file for reading/writing AND overwriting
   
+  //1.2 get & write the process ID then Carriage return & newline
+    // notes from guru99.com helped here
+    // combo of carriage return and newline is basically 'enter'
+  
+  fprintf(fp, "Process ID \r \n");
+
+
+  // 1.3 closes Quote txt file
+ 
+
   pthread_t thread;
   
   printf("first thread \n ");

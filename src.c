@@ -19,9 +19,9 @@ void *odd_threads(void *value)
 
 int main(int argc, char **argv)
 {
-  # assigns a file pointer and creates the txt file QUOTE
+  // assigns a file pointer and creates the txt file QUOTE
   FILE *fp;
-  fp = fopen ("QUOTE.txt", "w")
+  fp = fopen ("QUOTE.txt", "w");
   
   pthread_t thread;
   

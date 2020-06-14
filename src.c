@@ -31,7 +31,12 @@ int main(int argc, char **argv)
   fprintf(fp, "Process ID %d", getpid());
 
   //1.3 closes Quote txt file
- 
+  fclose(fp);
+
+  //1.4 semaphore FLAG manages QUOTE txt file access
+    // notes from csc villanova helped here
+  sem_t FLAG;
+  sem_init(&FLAG, 0, 10 );
 
   pthread_t thread;
   
@@ -42,6 +47,8 @@ int main(int argc, char **argv)
   pthread_create(&thread, NULL, odd_threads, &num);
   
   pthread_join(thread, NULL);
+
+  sem_destroy(&FLAG);
   
   return EXIT_SUCCESS;
 }

@@ -5,13 +5,23 @@
 #include <unistd.h> // for pid
 #define NUM_THREADS     7
 
-void *thread_start (void *t)
+void *thread_start (long *t)
 {
+  //2.1.1 Write thread ID and quote
+  FILE *fp;
+  fp = fopen("QUOTE.txt", "w+");
+  fprintf("Thread ID: %n", t);
+  if ( (*t % 2) == 0) {
+    fprintf(fp, " 'Controlling complexity is the essence of computer programming' --Brian Kernigan");
+  }
+     else
+  {
+    fprintf(fp, "Computer science is no more about computers than astronomy is about telescopes' --Edsger Dijkstra" );
+  }
+  
   printf("second thrAD\n");
+
   
-  int *num = (int *) t;
-  
-  printf("the thread ID is %t", *num);
   
   return NULL;
  }
@@ -52,7 +62,7 @@ int main(int argc, char **argv)
 
        
        if (t % 2 == 0){
-       rc = pthread_create(&threads[t], NULL, thread_start, (void *)t);
+       rc = pthread_create(&threads[t], NULL, thread_start, (long *)t);
   // 2.1 periodically get the sempahore flag
   //establish periodicity based on even vs odd
         }

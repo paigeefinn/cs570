@@ -5,21 +5,23 @@
 #include <unistd.h> // for pid
 #define NUM_THREADS     7
 
-void *odd_threads(void *value)
+void *thread_start (void *t)
 {
   printf("second thrAD\n");
   
-  int *num = (int *) value;
+  int *num = (int *) t;
   
-  printf("the value of value is %d", *num);
+  printf("the thread ID is %t", *num);
   
   return NULL;
  }
 
 
-
 int main(int argc, char **argv)
 {
+  int num = NUM_THREADS;
+  sem_t FLAG;
+  
   // 1.1 assigns a file pointer and creates the txt file QUOTE
   FILE *fp;
   fp = fopen ("QUOTE.txt", "w+");
@@ -28,27 +30,33 @@ int main(int argc, char **argv)
   //1.2 get & write the process ID then Carriage return & newline
     // notes from guru99.com helped here
     // combo of carriage return and newline is basically 'enter'
-  fprintf(fp, "Process ID %d", getpid());
+  fprintf(fp, "Process ID %d \r\n", getpid());
 
   //1.3 closes Quote txt file
   fclose(fp);
 
   //1.4 semaphore FLAG manages QUOTE txt file access
     // notes from csc villanova helped here
-  sem_t FLAG;
   sem_init(&FLAG, 0, 10 );
 
-  pthread_t thread;
-  
-  printf("first thread \n ");
-  
-  int num = 5;
-  
-  pthread_create(&thread, NULL, odd_threads, &num);
-  
-  pthread_join(thread, NULL);
+  // 2.2 Repeat the thread process 
+    // see GNU 13.18 Open File Description Locks Example
+  for (int i = 0; i < 8; i++) {
+    // initialize thread index
+    //2.1.1 
+    pthread_t threads[num];
+    int rc;
+    long t;
+    for(t=0; t<num; t++){
+       printf("In main: creating thread %ld\n", t);
 
-  sem_destroy(&FLAG);
-  
-  return EXIT_SUCCESS;
+       
+       if (t % 2 == 0){
+       rc = pthread_create(&threads[t], NULL, thread_start, (void *)t);
+  // 2.1 periodically get the sempahore flag
+  //establish periodicity based on even vs odd
+        }
+        return 0;
+        }
+  }
 }

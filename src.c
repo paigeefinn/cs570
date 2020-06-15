@@ -17,12 +17,8 @@ void *thread_start (long *t)
      else
   {
     fprintf(fp, "Computer science is no more about computers than astronomy is about telescopes' --Edsger Dijkstra" );
-  }
-  
-  printf("second thrAD\n");
-
-  
-  
+  }  
+  sleep(2 + ((int *t % 2))
   return NULL;
  }
 
@@ -47,7 +43,7 @@ int main(int argc, char **argv)
 
   //1.4 semaphore FLAG manages QUOTE txt file access
     // notes from csc villanova helped here
-  sem_init(&FLAG, 0, 10 );
+ // sem_init(&FLAG, 0, 10 );
 
   // 2.2 Repeat the thread process 
     // see GNU 13.18 Open File Description Locks Example
@@ -59,9 +55,6 @@ int main(int argc, char **argv)
     long t;
     for(t=0; t<num; t++){
        printf("In main: creating thread %ld\n", t);
-
-       
-       if (t % 2 == 0){
        rc = pthread_create(&threads[t], NULL, thread_start, (long *)t);
   // 2.1 periodically get the sempahore flag
   //establish periodicity based on even vs odd
@@ -69,4 +62,3 @@ int main(int argc, char **argv)
         return 0;
         }
   }
-}
